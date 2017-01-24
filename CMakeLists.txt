@@ -36,3 +36,6 @@ set(qfreerdp_SOURCES
 
 add_executable(qfreerdp ${qfreerdp_HEADERS} ${qfreerdp_SOURCES})
 target_link_libraries(qfreerdp Qt5::Core Qt5::Widgets)
+
+install(TARGETS qfreerdp
+        RUNTIME DESTINATION bin)
