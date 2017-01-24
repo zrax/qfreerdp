@@ -593,18 +593,6 @@ void Launcher::startXFreeRDP()
         params.append(QStringLiteral("/gp:%1").arg(m_gatePassword->text()));
     }
 
-#if 0
-    printf("Got params:\n");
-    for (const auto &param : params) {
-        if (param.startsWith("/p:") || param.startsWith("/gp:"))
-            printf("  \"%s:<removed>\"\n", param.split(':')[0].toUtf8().constData());
-        else
-            printf("  \"%s\"\n", param.toUtf8().constData());
-    }
-    fflush(stdout);
-    return;
-#endif
-
     QProcess proc;
     if (!proc.startDetached(QStringLiteral("xfreerdp"), params)) {
         QMessageBox::critical(this, tr("Error starting xfreerdp"),
