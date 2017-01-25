@@ -104,6 +104,7 @@ private:
     QLineEdit *m_gateServer;
     QLineEdit *m_gateUsername;
     QLineEdit *m_gatePassword;
+    QLineEdit *m_extraParams;
 };
 
 #endif

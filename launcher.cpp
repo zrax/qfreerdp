@@ -347,8 +347,22 @@ Launcher::Launcher()
     gatewayGrid->addWidget(gatePasswordLabel, 3, 0);
     gatewayGrid->addWidget(m_gatePassword, 3, 1);
 
+    QGroupBox *extraParamsGroup = new QGroupBox(tr("Extra Parameters"), this);
+    QLabel *extraParamsHint = new QLabel(tr("For options not yet available in the GUI, "
+                                            "you may pass additional parameters here to be "
+                                            "sent directly to the xfreerdp executable."), this);
+    extraParamsHint->setWordWrap(true);
+    QLabel *extraParamsLabel = new QLabel(tr("Pa&rameters:"), this);
+    m_extraParams = new QLineEdit(this);
+    extraParamsLabel->setBuddy(m_extraParams);
+    QGridLayout *extraParamsGrid = new QGridLayout(extraParamsGroup);
+    extraParamsGrid->addWidget(extraParamsHint, 0, 0, 1, 2);
+    extraParamsGrid->addWidget(extraParamsLabel, 1, 0);
+    extraParamsGrid->addWidget(m_extraParams, 1, 1);
+
     QVBoxLayout *advancedLayout = new QVBoxLayout(advancedTab);
     advancedLayout->addWidget(gatewayGroup);
+    advancedLayout->addWidget(extraParamsGroup);
     advancedLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     tabs->addTab(advancedTab, tr("&Advanced"));
 
@@ -423,6 +437,7 @@ void Launcher::saveConfig()
     // Advanced
     settings.setValue(QStringLiteral("Gateway"), m_gateServer->text());
     settings.setValue(QStringLiteral("GatewayUsername"), m_gateUsername->text());
+    settings.setValue(QStringLiteral("ExtraParams"), m_extraParams->text());
 }
 
 void Launcher::restoreConfig()
@@ -503,6 +518,56 @@ void Launcher::restoreConfig()
     // Advanced
     m_gateServer->setText(settings.value(QStringLiteral("Gateway")).toString());
     m_gateUsername->setText(settings.value(QStringLiteral("GatewayUsername")).toString());
+    m_extraParams->setText(settings.value(QStringLiteral("ExtraParams")).toString());
+}
+
+static QString stripQuotes(QString text)
+{
+    if (text.at(0) == '"' && text.at(text.size() - 1) == '"')
+        text = text.mid(1, text.size() - 2);
+    else if (text.at(0) == '\'' && text.at(text.size() - 1) == '\'')
+        text = text.mid(1, text.size() - 2);
+    text.replace("\\\"", "\"").replace("\\'", "'");
+    return text;
+}
+
+static QStringList splitParams(const QString &text)
+{
+    QStringList result;
+    int start = 0;
+    int quotes = 0;
+    QChar last(0);
+    for (int cursor = 0; cursor < text.size(); ++cursor) {
+        QChar ch = text.data()[cursor];
+        if (quotes == 0 && ch == ' ') {
+            QString param = text.mid(start, cursor - start);
+            if (!param.isEmpty())
+                result.append(stripQuotes(param));
+            start = cursor + 1;
+        } else if (ch == '"') {
+            if (quotes == 2) {
+                if (last != '\\')
+                    quotes = 0;
+            } else if (quotes == 0) {
+                if (last != '\\')
+                    quotes = 2;
+            }
+        } else if (ch == '\'') {
+            if (quotes == 1) {
+                if (last != '\\')
+                    quotes = 0;
+            } else if (quotes == 0) {
+                if (last != '\\')
+                    quotes = 1;
+            }
+        }
+        last = ch;
+    }
+    QString remainder = text.mid(start);
+    if (!remainder.isEmpty())
+        result.append(stripQuotes(remainder));
+
+    return result;
 }
 
 void Launcher::startXFreeRDP()
@@ -592,6 +657,9 @@ void Launcher::startXFreeRDP()
         params.append(QStringLiteral("/gu:%1").arg(m_gateUsername->text()));
         params.append(QStringLiteral("/gp:%1").arg(m_gatePassword->text()));
     }
+
+    QStringList extraParams = splitParams(m_extraParams->text());
+    params.append(extraParams);
 
     QProcess proc;
     if (!proc.startDetached(QStringLiteral("xfreerdp"), params)) {
