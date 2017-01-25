@@ -130,7 +130,7 @@ Launcher::Launcher()
     QVBoxLayout *generalLayout = new QVBoxLayout(generalTab);
     generalLayout->addWidget(loginGroup);
     generalLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    tabs->addTab(generalTab, tr("General"));
+    tabs->addTab(generalTab, tr("&General"));
 
     QWidget *displayTab = new QWidget(this);
     QGroupBox *displayGroup = new QGroupBox(tr("Display settings"), this);
@@ -154,7 +154,7 @@ Launcher::Launcher()
     customResolutionLayout->addWidget(m_customWidth);
     customResolutionLayout->addWidget(new QLabel(tr(" x Height:"), this));
     customResolutionLayout->addWidget(m_customHeight);
-    QLabel *depthLabel = new QLabel(tr("Color &Depth:"), this);
+    QLabel *depthLabel = new QLabel(tr("&Color Depth:"), this);
     m_depth = new QComboBox(this);
     m_depth->addItems(QStringList { tr("High Color (15 bpp)"),
                                     tr("High Color (16 bpp)"),
@@ -205,7 +205,7 @@ Launcher::Launcher()
     });
 
     QGroupBox *compressionGroup = new QGroupBox(tr("Compression"), this);
-    QLabel *compressionLabel = new QLabel(tr("Network &Compression:"), this);
+    QLabel *compressionLabel = new QLabel(tr("Network Co&mpression:"), this);
     m_compression = new QComboBox(this);
     m_compression->addItems(QStringList { tr("Disabled"),
                                           tr("Default (Enabled)"),
@@ -242,11 +242,11 @@ Launcher::Launcher()
     displayLayout->addWidget(displayGroup);
     displayLayout->addWidget(compressionGroup);
     displayLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    tabs->addTab(displayTab, tr("Display"));
+    tabs->addTab(displayTab, tr("&Display"));
 
     QWidget *deviceTab = new QWidget(this);
     QGroupBox *audioGroup = new QGroupBox(tr("Audio"), this);
-    QLabel *audioModeLabel = new QLabel(tr("&Audio Mode:"), this);
+    QLabel *audioModeLabel = new QLabel(tr("A&udio Mode:"), this);
     m_audioMode = new QComboBox(this);
     m_audioMode->addItems(QStringList { tr("Redirect to local"),
                                         tr("Play on remote"),
@@ -259,7 +259,7 @@ Launcher::Launcher()
     QGroupBox *shareGroup = new QGroupBox(tr("Share devices"), this);
     QLabel *shareLabel = new QLabel(tr("Share with remote:"), this);
     m_clipboard = new QCheckBox(tr("&Clipboard"), this);
-    m_redirectDrives = new QCheckBox(tr("All &drives"), this);
+    m_redirectDrives = new QCheckBox(tr("All d&rives"), this);
     m_redirectHome = new QCheckBox(tr("&Home drive"), this);
     QLabel *devicesHint = new QLabel(tr("More device support to be added later..."), this);
     devicesHint->setWordWrap(true);
@@ -274,7 +274,7 @@ Launcher::Launcher()
     deviceLayout->addWidget(audioGroup);
     deviceLayout->addWidget(shareGroup);
     deviceLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    tabs->addTab(deviceTab, tr("Devices"));
+    tabs->addTab(deviceTab, tr("De&vices"));
 
     QWidget *experienceTab = new QWidget(this);
     QGroupBox *performanceGroup = new QGroupBox(tr("Performance"), this);
@@ -289,8 +289,8 @@ Launcher::Launcher()
     m_wallpaper = new QCheckBox(tr("Desktop &Wallpaper"), this);
     m_fontSmoothing = new QCheckBox(tr("&Font Smoothing"), this);
     m_aero = new QCheckBox(tr("Desktop &composition (Aero)"), this);
-    m_windowDrag = new QCheckBox(tr("Show window contents while &dragging"), this);
-    m_menuAnims = new QCheckBox(tr("Menu &Animation"), this);
+    m_windowDrag = new QCheckBox(tr("S&how window contents while dragging"), this);
+    m_menuAnims = new QCheckBox(tr("Menu A&nimation"), this);
     m_themes = new QCheckBox(tr("Windows &Themes"), this);
     QGridLayout *performanceGrid = new QGridLayout(performanceGroup);
     performanceGrid->addWidget(presetLabel, 0, 0);
@@ -312,7 +312,7 @@ Launcher::Launcher()
     QGroupBox *cacheGroup = new QGroupBox(tr("Caching"), this);
     m_bitmapCache = new QCheckBox(tr("&Bitmap caching"), this);
     m_offscreenCache = new QCheckBox(tr("&Offscreen bitmap caching"), this);
-    m_glyphCache = new QCheckBox(tr("&Glyph caching"), this);
+    m_glyphCache = new QCheckBox(tr("Gl&yph caching"), this);
     QGridLayout *cacheGrid = new QGridLayout(cacheGroup);
     cacheGrid->addWidget(m_bitmapCache, 0, 1);
     cacheGrid->addWidget(m_offscreenCache, 1, 1);
@@ -322,19 +322,19 @@ Launcher::Launcher()
     experienceLayout->addWidget(performanceGroup);
     experienceLayout->addWidget(cacheGroup);
     experienceLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    tabs->addTab(experienceTab, tr("Experience"));
+    tabs->addTab(experienceTab, tr("E&xperience"));
 
     QWidget *advancedTab = new QWidget(this);
     QGroupBox *gatewayGroup = new QGroupBox(tr("Gateway settings"), this);
     QLabel *gatewayHelp = new QLabel(tr("Leave blank if you don't require a gateway"), this);
     gatewayHelp->setWordWrap(true);
-    QLabel *gateServerLabel = new QLabel(tr("Gateway Ser&ver:"), this);
+    QLabel *gateServerLabel = new QLabel(tr("Gateway &Server:"), this);
     m_gateServer = new QLineEdit(this);
     gateServerLabel->setBuddy(m_gateServer);
-    QLabel *gateUsernameLabel = new QLabel(tr("Gateway Us&ername:"), this);
+    QLabel *gateUsernameLabel = new QLabel(tr("Gateway &Username:"), this);
     m_gateUsername = new QLineEdit(this);
     gateUsernameLabel->setBuddy(m_gateUsername);
-    QLabel *gatePasswordLabel = new QLabel(tr("Gateway Pass&word:"), this);
+    QLabel *gatePasswordLabel = new QLabel(tr("Gateway &Password:"), this);
     m_gatePassword = new QLineEdit(this);
     m_gatePassword->setEchoMode(QLineEdit::Password);
     gatePasswordLabel->setBuddy(m_gatePassword);
@@ -350,7 +350,7 @@ Launcher::Launcher()
     QVBoxLayout *advancedLayout = new QVBoxLayout(advancedTab);
     advancedLayout->addWidget(gatewayGroup);
     advancedLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    tabs->addTab(advancedTab, tr("Advanced"));
+    tabs->addTab(advancedTab, tr("&Advanced"));
 
     QPushButton *connectButton = new QPushButton(tr("&Connect"), this);
     connectButton->setDefault(true);
@@ -359,7 +359,7 @@ Launcher::Launcher()
         startXFreeRDP();
     });
 
-    QPushButton *closeButton = new QPushButton(tr("Close"), this);
+    QPushButton *closeButton = new QPushButton(tr("Cl&ose"), this);
     connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
     QWidget *buttonBox = new QWidget(this);
