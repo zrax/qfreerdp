@@ -99,6 +99,7 @@ Launcher::Launcher()
     : QDialog(Q_NULLPTR)
 {
     QTabWidget *tabs = new QTabWidget(this);
+    tabs->setUsesScrollButtons(false);
 
     QWidget *generalTab = new QWidget(this);
     QGroupBox *loginGroup = new QGroupBox(tr("Login settings"), this);
